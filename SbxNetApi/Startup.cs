@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using SbxNetApi.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SbxNetApi
 {
@@ -25,6 +26,15 @@ namespace SbxNetApi
                opt.UseInMemoryDatabase("SbxApiDB"));
 
             services.AddControllers();
+
+            services.AddApiVersioning();
+
+            services.AddApiVersioning(config =>
+            {
+                config.DefaultApiVersion = new ApiVersion(1, 0);
+                config.AssumeDefaultVersionWhenUnspecified = true;
+                config.ReportApiVersions = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -8,8 +8,9 @@ using SbxNetApi.DTOs;
 
 namespace SbxNetApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class UsersController : ControllerBase
     {
         private readonly ApiDbContext _context;
@@ -21,6 +22,7 @@ namespace SbxNetApi.Controllers
 
         // GET: api/Users
         [HttpGet]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
         {
             return await _context.Users
@@ -30,6 +32,7 @@ namespace SbxNetApi.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult<UserDTO>> GetUser(long id)
         {
             var user = await _context.Users.FindAsync(id);
@@ -46,6 +49,7 @@ namespace SbxNetApi.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<IActionResult> PutUser(long id, UserDTO userDto)
         {
             if (id != userDto.Id)
@@ -87,6 +91,7 @@ namespace SbxNetApi.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult<UserDTO>> PostUser(UserDTO userDto)
         {
             var user = new User
@@ -109,6 +114,7 @@ namespace SbxNetApi.Controllers
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult> DeleteUser(long id)
         {
             var user = await _context.Users.FindAsync(id);
