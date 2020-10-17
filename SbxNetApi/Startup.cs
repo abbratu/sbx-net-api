@@ -25,7 +25,9 @@ namespace SbxNetApi
             services.AddDbContext<ApiDbContext>(opt =>
                opt.UseInMemoryDatabase("SbxApiDB"));
 
-            services.AddControllers();
+            services.AddControllers(o => {
+                o.UseGeneralRoutePrefix("api/v{version:apiVersion}");
+            });
 
             services.AddApiVersioning();
 

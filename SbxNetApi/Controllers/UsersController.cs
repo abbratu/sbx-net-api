@@ -8,7 +8,7 @@ using SbxNetApi.DTOs;
 
 namespace SbxNetApi.Controllers
 {
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
     public class UsersController : ControllerBase
@@ -105,9 +105,12 @@ namespace SbxNetApi.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
+
+            var version = Request.HttpContext.GetRequestedApiVersion().ToString();
+
             return CreatedAtAction(
                 nameof(GetUser),
-                new { id = user.Id },
+                new { id = user.Id, version },
                 UserToDTO(user)
             );
         }
